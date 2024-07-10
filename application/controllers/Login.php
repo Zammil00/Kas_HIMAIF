@@ -41,7 +41,7 @@ class Login extends CI_Controller
 			foreach ($data['akun'] as $akun) {
 				$sesi['id'] = $akun->id;
 				$sesi['nama'] = $akun->nama;
-				$sesi['foto'] = $akun->foto;
+				// $sesi['foto'] = $akun->foto;
 				$sesi['email'] = $akun->email;
 				$sesi['password'] = $akun->password;
 				$sesi['akses'] = $akun->akses;

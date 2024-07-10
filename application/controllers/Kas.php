@@ -262,6 +262,74 @@ class Kas extends CI_Controller
 					 </script>";
         }
     }
+    public function v_hapus_kas($id_kas)
+    {
+        echo "
+    <link href='" . base_url() . "/assets/sweetalert/sweetalert.css' rel='stylesheet' />
+    <script src='" . base_url() . "/assets/bsb/plugins/jquery/jquery.min.js'></script>
+    <script src='" . base_url() . "/assets/sweetalert/sweetalert.min.js'></script>
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            swal({
+                title: 'Apakah Anda yakin?',
+                text: 'Data ini akan dihapus dan tidak dapat dikembalikan!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal',
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: '" . base_url('kas/hapus_kas_aksi/' . $id_kas) . "',
+                        type: 'POST',
+                        success: function(response) {
+                            swal({
+                                title: 'Data Kas Berhasil Dihapus',
+                                type: 'success',
+                                timer: 4000,
+                                showConfirmButton: false
+                            });
+                            setTimeout(function(){
+                                window.location.href = '" . base_url('kas/v_kas') . "';
+                            }, 2100);
+                        },
+                        error: function() {
+                            swal({
+                                title: 'Data Kas Gagal Dihapus',
+                                type: 'error',
+                                timer: 4000,
+                                showConfirmButton: false
+                            });
+                            setTimeout(function(){
+                                window.location.href = '" . base_url('kas/v_kas') . "';
+                            }, 2100);
+                        }
+                    });
+                } else {
+                    swal.close();
+                    window.location.href = '" . base_url('kas/v_kas') . "';
+                }
+            });
+        });
+    </script>";
+    }
+
+
+    public function hapus_kas_aksi($id_kas)
+    {
+        $sikat = $this->m_kelola_kas->hapus_kas($id_kas);
+
+        if ($sikat) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
 
 
 

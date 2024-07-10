@@ -1,19 +1,21 @@
-<?php 
-defined('BASEPATH') OR die('cannot access');
+<?php
+defined('BASEPATH') or die('cannot access');
 
-class M_kelola_kas extends CI_Model {
+class M_kelola_kas extends CI_Model
+{
 
-    function __contruct(){
+    function __contruct()
+    {
         parent::__contruct();
         date_default_timezone_set('Asia/Jakarta');
     }
 
     public function tampil_kas()
     {
-                    $this->db->select('*');
-                    // $this->db->limit(10);
-                    $this->db->order_by('created', 'DESC');
-        $tampil =   $this->db->get('tb_kas');
+        $this->db->select('*');
+        // $this->db->limit(10);
+        $this->db->order_by('created', 'DESC');
+        $tampil = $this->db->get('tb_kas');
         return $tampil->result();
     }
 
@@ -25,7 +27,7 @@ class M_kelola_kas extends CI_Model {
 
     function list_kas($limit, $start)
     {
-                 $this->db->order_by('created', 'DESC');
+        $this->db->order_by('created', 'DESC');
         $sikat = $this->db->get('tb_kas', $limit, $start);
         return $sikat;
     }
@@ -33,7 +35,7 @@ class M_kelola_kas extends CI_Model {
     function list_kas_hari_ini($limit, $start)
     {
         $sikat = $this->db->query("SELECT jenis_kas, nominal, keterangan, DATE_FORMAT(created, '%H:%i:%s') AS created FROM tb_kas WHERE DATE_FORMAT(created, '%Y-%m-%d') = CURDATE();");
-                return $sikat->result();
+        return $sikat->result();
     }
 
     public function ubah_kas($id_kas)
@@ -61,39 +63,44 @@ class M_kelola_kas extends CI_Model {
         return $sikat->result();
     }
 
-   public function hitung_kas_keluar()
-   {
-       $sikat = $this->db->query("SELECT SUM(nominal) AS total_keluar FROM tb_kas WHERE jenis_kas = 'kk' ");
+    public function hitung_kas_keluar()
+    {
+        $sikat = $this->db->query("SELECT SUM(nominal) AS total_keluar FROM tb_kas WHERE jenis_kas = 'kk' ");
         return $sikat->result();
-   }
+    }
 
-   public function hitung_kas_masuk()
-   {
-       $sikat = $this->db->query("SELECT SUM(nominal) AS total_masuk FROM tb_kas WHERE jenis_kas = 'km'");
+    public function hitung_kas_masuk()
+    {
+        $sikat = $this->db->query("SELECT SUM(nominal) AS total_masuk FROM tb_kas WHERE jenis_kas = 'km'");
         return $sikat->result();
-   }
+    }
 
-   public function cari()
-   {
-       $sikat = $this->db->query("SELECT * FROM tb_kas
+    public function cari()
+    {
+        $sikat = $this->db->query("SELECT * FROM tb_kas
                                     WHERE ");
-   }
+    }
 
-   public function tran_hari_ini()
-   {
+    public function tran_hari_ini()
+    {
         $sikat = $this->db->query("SELECT jenis_kas, nominal, keterangan, DATE_FORMAT(created, '%H:%i:%s') AS created FROM tb_kas WHERE DATE_FORMAT(created, '%Y-%m-%d') = CURDATE() AND jenis_kas = 'kk' ORDER BY created DESC");
         return $sikat->result();
-   }
+    }
 
-   public function total_keluar_hari_ini(){
-       $sikat = $this->db->query("SELECT SUM(nominal) AS total FROM tb_kas WHERE DATE_FORMAT(created, '%Y-%m-%d') = CURDATE() AND jenis_kas = 'kk'");
-       return $sikat->result();}
+    public function total_keluar_hari_ini()
+    {
+        $sikat = $this->db->query("SELECT SUM(nominal) AS total FROM tb_kas WHERE DATE_FORMAT(created, '%Y-%m-%d') = CURDATE() AND jenis_kas = 'kk'");
+        return $sikat->result();
+    }
 
-   public function total_masuk_hari_ini(){
-       $sikat = $this->db->query("SELECT SUM(nominal) AS total FROM tb_kas WHERE DATE_FORMAT(created, '%Y-%m-%d') = CURDATE() AND jenis_kas = 'km'");
-       return $sikat->result(); }
+    public function total_masuk_hari_ini()
+    {
+        $sikat = $this->db->query("SELECT SUM(nominal) AS total FROM tb_kas WHERE DATE_FORMAT(created, '%Y-%m-%d') = CURDATE() AND jenis_kas = 'km'");
+        return $sikat->result();
+    }
 
-    public function tampil_kk(){
+    public function tampil_kk()
+    {
         $sikat = $this->db->query(" select
                                         ifnull((SELECT SUM(nominal) FROM (tb_kas)WHERE((Month(created)=1)AND (jenis_kas = 'kk'))),0) AS Januari,
                                         ifnull((SELECT SUM(nominal) FROM (tb_kas)WHERE((Month(created)=2)AND (jenis_kas = 'kk'))),0) AS Februari,
@@ -111,7 +118,8 @@ class M_kelola_kas extends CI_Model {
         return $sikat;
     }
 
-    public function tampil_km(){
+    public function tampil_km()
+    {
         $sikat = $this->db->query(" select
                                         ifnull((SELECT SUM(nominal) FROM (tb_kas)WHERE((Month(created)=1)AND (jenis_kas = 'km'))),0) AS Januari,
                                         ifnull((SELECT SUM(nominal) FROM (tb_kas)WHERE((Month(created)=2)AND (jenis_kas = 'km'))),0) AS Februari,
@@ -128,5 +136,11 @@ class M_kelola_kas extends CI_Model {
                                     from tb_kas");
         return $sikat;
     }
-    
+
+    public function hapus_kas($id_kas)
+    {
+        return $this->db->delete('tb_kas', array('id_kas' => $id_kas));
+    }
+
+
 }

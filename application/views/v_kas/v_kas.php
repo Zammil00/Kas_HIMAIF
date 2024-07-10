@@ -62,7 +62,11 @@
                       <td>
                         <a href="<?php echo base_url("kas/v_ubah_kas/$tk->id_kas"); ?>"
                           class="btn btn-icon btn-warning"><i class="far fa-edit" title="Ubah Data"></i></a>
-                        <a href="#" class="btn btn-icon btn-danger"><i class="fas fa-times"></i></a>
+
+
+                        <a href="<?php echo base_url("kas/v_hapus_kas/$tk->id_kas"); ?>" class="btn btn-icon btn-danger">
+                          <i class="fas fa-times"></i>
+                        </a>
                       </td>
                     </tr>
                     <?php
