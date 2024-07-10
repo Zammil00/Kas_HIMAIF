@@ -25,6 +25,7 @@
                           </div>
                         </div> -->
                   <a href="#" class="btn btn-info">Cetak</a>
+                  <!-- <a href="<?php echo base_url("kas/print_kas"); ?>" class="btn btn-info">Cetak</a> -->
                 </form>
               </div>
             </div>
