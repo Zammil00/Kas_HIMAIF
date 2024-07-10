@@ -16,7 +16,7 @@ class Login extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Login ~ Kas Himaif';
+		$data['title'] = 'Login Admin ~ Kas Himaif';
 		$this->load->view('v_login/login', $data);
 	}
 
